@@ -9,6 +9,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //set the page based on whether there is a new prompt available
         if(newPromptAvailable){
             setContentView(R.layout.poem_submission)
         }
