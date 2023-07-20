@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "154267273152",
+    "project_id": "real-poetry",
+    "storage_bucket": "real-poetry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154267273152:android:511b70c363ea3c512faa25",
+        "android_client_info": {
+          "package_name": "com.example.tangeryme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154267273152-cvo2tshnd9ekgq8n87djhsiiql7gt12a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp_XE5bH6ckaLV_UlTlxDb0mm46qjf_Fg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154267273152-cvo2tshnd9ekgq8n87djhsiiql7gt12a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
