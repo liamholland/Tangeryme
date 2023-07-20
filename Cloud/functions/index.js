@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const serviceAccount = require("real-poetry-firebase-adminsdk-f6djk-d8966a81e0.json");
+const serviceAccount = require("./real-poetry-firebase-adminsdk-f6djk-6977294880.json");
 // const cors = require("cors")({origin: true});    //dont know if ill need this at some point
 
 admin.initializeApp({
@@ -88,8 +88,32 @@ exports.getPoems = functions.https.onCall((data, context) => {
         default:
             return { code: 1, message: `Failed: Invalid function code ${callType}` };
     }
+
 });
 
 //check for a new prompt and return it
 
 //register a user in the database upon first login
+
+//check a given username to see if it is unique and valid
+exports.checkValidUsername = functions.https.onRequest((req, res) => {
+    const username = req.body.data.username;    //get username from the request
+
+    //check if the username is even valid first
+    //TODO: include regex tests here
+    if(username === null){
+        res.send({data: {valid: false, message: "Invalid Username"}});
+        return;
+    }
+
+    //check if the username is unique by collecting and scanning through the database
+    db.collection("Users").doc("Usernames").get().then((docSnap) => {
+        const usernames = docSnap.data()['names'];   //array of all usernames in use
+
+        if(usernames.includes(username)){
+            res.send({data: {valid: false, message: `Username ${username} already in use`}});
+        }else{
+            res.send({data: {valid: true, message: `Username ${username} is valid`}});
+        }
+    });
+})

@@ -10,12 +10,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //set the page based on whether there is a new prompt available
-        if(newPromptAvailable){
-            setContentView(R.layout.poem_submission)
+        //initialise the firebase authentication connection
+        AccountManager.initFirebaseAuth()
+    }
+
+    public override fun onStart() {
+        super.onStart()
+
+        //Set the UI based on whether the user is logged in
+        if(AccountManager.checkLoginStatus()){
+            //present poetry submission / view poetry page
         }
         else{
-            setContentView(R.layout.previous_poems)
+            //present login/signup page
         }
     }
 }
