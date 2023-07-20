@@ -47,5 +47,6 @@ dependencies {
 
     //Firebase Dependencies
     implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
-    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx") //Auth
+    implementation("com.google.firebase:firebase-functions-ktx")    //Functions
 }

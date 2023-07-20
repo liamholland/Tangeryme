@@ -9,9 +9,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //initialise the firebase authentication connection
-        AccountManager.initFirebaseAuth()
     }
 
     public override fun onStart() {

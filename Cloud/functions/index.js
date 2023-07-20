@@ -94,26 +94,46 @@ exports.getPoems = functions.https.onCall((data, context) => {
 //check for a new prompt and return it
 
 //register a user in the database upon first login
+exports.registerUser = functions.https.onCall((data, context) => {
+    const id = context.auth.uid;
+    const username = data.username;
+    const email = data.email;
+
+    //add the username to the username list
+    return db.collection("Users").doc("Usernames").get().then((doc) => {
+        let names = doc.data()["names"];
+        names.push(username);
+        names.sort()
+        db.collection("Users").doc("Usernames").update({names: names}).then(() => {
+            db.collection("Users").doc(`${id}`).set({
+                username: username,
+                email: email,
+                poems: []
+            }).then(() => {
+                return { code: 0, message: "Registration Successful"};
+            })
+        })
+    })
+});
 
 //check a given username to see if it is unique and valid
-exports.checkValidUsername = functions.https.onRequest((req, res) => {
-    const username = req.body.data.username;    //get username from the request
+exports.checkValidUsername = functions.https.onCall((req, res) => {
+    const username = data.username;    //get username from the request
 
     //check if the username is even valid first
     //TODO: include regex tests here
     if(username === null){
-        res.send({data: {valid: false, message: "Invalid Username"}});
-        return;
+        return {code: 1, message: "Username is invalid"}
     }
 
     //check if the username is unique by collecting and scanning through the database
-    db.collection("Users").doc("Usernames").get().then((docSnap) => {
+    return db.collection("Users").doc("Usernames").get().then((docSnap) => {
         const usernames = docSnap.data()['names'];   //array of all usernames in use
 
         if(usernames.includes(username)){
-            res.send({data: {valid: false, message: `Username ${username} already in use`}});
+            return {code: 0, message: "Username is valid"};
         }else{
-            res.send({data: {valid: true, message: `Username ${username} is valid`}});
+            return {code: 1, message: `Username ${username} is already in use`};
         }
     });
 })
